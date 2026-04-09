@@ -1,0 +1,115 @@
+name: Test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  # ─────────────────────────────────────────────────────────────
+  #  Lint — shellcheck all scripts
+  # ─────────────────────────────────────────────────────────────
+  lint:
+    name: Shellcheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install shellcheck
+        run: sudo apt-get install -y shellcheck
+
+      - name: Run shellcheck
+        run: |
+          shellcheck install.sh
+          shellcheck scripts/utils.sh
+          shellcheck scripts/backup.sh
+          shellcheck configs/scripts/dl.sh
+
+  # ─────────────────────────────────────────────────────────────
+  #  Dry Run — verify configs copy to correct locations
+  # ─────────────────────────────────────────────────────────────
+  dry-run:
+    name: Dry Run (Arch Linux)
+    runs-on: ubuntu-latest
+    container: archlinux:latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install base packages
+        run: pacman -Sy --noconfirm bash coreutils git zsh
+
+      - name: Create mock commands
+        run: |
+          # Mock yay and paru as already installed — skips AUR helper build
+          printf '#!/bin/bash\necho "[MOCK] yay $*"\n' > /usr/local/bin/yay
+          printf '#!/bin/bash\necho "[MOCK] paru $*"\n' > /usr/local/bin/paru
+          chmod +x /usr/local/bin/yay /usr/local/bin/paru
+
+          # Mock systemctl and chsh — not available in container
+          printf '#!/bin/bash\necho "[MOCK] systemctl $*"\n' > /usr/local/bin/systemctl
+          printf '#!/bin/bash\necho "[MOCK] chsh $*"\n'     > /usr/local/bin/chsh
+          chmod +x /usr/local/bin/systemctl /usr/local/bin/chsh
+
+          # Mock curl — outputs a no-op script (used by oh-my-zsh installer)
+          printf '#!/bin/bash\necho "echo [MOCK] skipped"\n' > /usr/local/bin/curl
+          chmod +x /usr/local/bin/curl
+
+      - name: Pre-create zsh plugin dirs
+        run: |
+          # Simulate already-installed plugins so the checks pass
+          mkdir -p "$HOME/.oh-my-zsh"
+          mkdir -p "$HOME/.config/zsh/zsh-autosuggestions"
+          mkdir -p "$HOME/.config/zsh/zsh-syntax-highlighting"
+
+      - name: Run install script
+        run: yes | bash install.sh
+
+      - name: Verify configs copied to correct locations
+        run: |
+          errors=0
+
+          check() {
+            if [ -e "$1" ]; then
+              echo "  ✓ $1"
+            else
+              echo "  ✗ MISSING: $1"
+              errors=$((errors + 1))
+            fi
+          }
+
+          echo ""
+          echo "── Shell & Terminal ──────────────────────────"
+          check "$HOME/.zshrc"
+          check "$HOME/.p10k.zsh"
+          check "$HOME/.tmux.conf"
+          check "$HOME/.config/kitty/kitty.conf"
+
+          echo ""
+          echo "── CLI Tools ─────────────────────────────────"
+          check "$HOME/.config/bat/config"
+          check "$HOME/.config/btop/btop.conf"
+          check "$HOME/.config/atuin/config.toml"
+          check "$HOME/.config/yazi/yazi.toml"
+
+          echo ""
+          echo "── Music ─────────────────────────────────────"
+          check "$HOME/.config/mpd/mpd.conf"
+          check "$HOME/.config/rmpc/config.ron"
+
+          echo ""
+          echo "── Media ─────────────────────────────────────"
+          check "$HOME/.config/yt-x/yt-x.conf"
+
+          echo ""
+          echo "── Scripts ───────────────────────────────────"
+          check "$HOME/Music/dl.sh"
+
+          echo ""
+          if [ "$errors" -gt 0 ]; then
+            echo "FAILED — $errors config(s) missing"
+            exit 1
+          fi
+
+          echo "All configs verified successfully."
