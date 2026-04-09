@@ -8,7 +8,7 @@ init_backup() {
 }
 
 backup_config() {
-    local target="${1/#\~/$HOME}"
+    local target="$1"
 
     if [ -e "$target" ]; then
         mkdir -p "$BACKUP_DIR"

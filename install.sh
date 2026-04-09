@@ -25,7 +25,7 @@ install_pkgs() {
 
 copy_config() {
     local src="$DOTFILES_DIR/configs/$1"
-    local dest="${2/#\~/$HOME}"
+    local dest="$2"
 
     if [ ! -e "$src" ]; then
         warn "Config not found: configs/$1 — skipping."
@@ -111,8 +111,8 @@ install_zsh() {
         success "zsh-syntax-highlighting already installed."
     fi
 
-    copy_config "zsh/.zshrc" "~/.zshrc"
-    copy_config "zsh/.p10k.zsh" "~/.p10k.zsh"
+    copy_config "zsh/.zshrc" "$HOME/.zshrc"
+    copy_config "zsh/.p10k.zsh" "$HOME/.p10k.zsh"
 
     if [ "$SHELL" != "$(which zsh)" ]; then
         ask "Set zsh as default shell?" && chsh -s "$(which zsh)"
@@ -124,7 +124,7 @@ install_tmux() {
     ask "Install tmux?" || return
     section "tmux"
     install_pkgs tmux
-    copy_config "tmux/.tmux.conf" "~/.tmux.conf"
+    copy_config "tmux/.tmux.conf" "$HOME/.tmux.conf"
     success "tmux done."
 }
 
@@ -132,7 +132,7 @@ install_kitty() {
     ask "Install kitty?" || return
     section "kitty"
     install_pkgs kitty
-    copy_config "kitty" "~/.config/kitty"
+    copy_config "kitty" "$HOME/.config/kitty"
     success "kitty done."
 }
 
@@ -140,7 +140,7 @@ install_yazi() {
     ask "Install yazi?" || return
     section "yazi"
     install_pkgs yazi
-    copy_config "yazi" "~/.config/yazi"
+    copy_config "yazi" "$HOME/.config/yazi"
     success "yazi done."
 }
 
@@ -148,7 +148,7 @@ install_bat() {
     ask "Install bat?" || return
     section "bat"
     install_pkgs bat
-    copy_config "bat" "~/.config/bat"
+    copy_config "bat" "$HOME/.config/bat"
     success "bat done."
 }
 
@@ -156,7 +156,7 @@ install_btop() {
     ask "Install btop?" || return
     section "btop"
     install_pkgs btop
-    copy_config "btop" "~/.config/btop"
+    copy_config "btop" "$HOME/.config/btop"
     success "btop done."
 }
 
@@ -164,7 +164,7 @@ install_atuin() {
     ask "Install atuin?" || return
     section "atuin"
     install_pkgs atuin
-    copy_config "atuin/config.toml" "~/.config/atuin/config.toml"
+    copy_config "atuin/config.toml" "$HOME/.config/atuin/config.toml"
     success "atuin done."
 }
 
@@ -172,7 +172,7 @@ install_ripgrep() {
     ask "Install ripgrep?" || return
     section "ripgrep"
     install_pkgs ripgrep
-    copy_config "ripgrep/config" "~/.config/ripgrep/config"
+    copy_config "ripgrep/config" "$HOME/.config/ripgrep/config"
     success "ripgrep done."
 }
 
@@ -187,7 +187,7 @@ install_mpd() {
     ask "Install MPD?" || return
     section "MPD"
     install_pkgs mpd mpc
-    copy_config "mpd/mpd.conf" "~/.config/mpd/mpd.conf"
+    copy_config "mpd/mpd.conf" "$HOME/.config/mpd/mpd.conf"
     mkdir -p "$HOME/.config/mpd/playlists"
     mkdir -p "$HOME/.local/state/mpd"
     ask "Enable MPD systemd user service?" && systemctl --user enable --now mpd
@@ -198,7 +198,7 @@ install_rmpc() {
     ask "Install rmpc?" || return
     section "rmpc"
     install_pkgs rmpc
-    copy_config "rmpc" "~/.config/rmpc"
+    copy_config "rmpc" "$HOME/.config/rmpc"
     success "rmpc done."
 }
 
@@ -213,7 +213,7 @@ install_ytdlp() {
     ask "Install yt-dlp?" || return
     section "yt-dlp"
     install_pkgs yt-dlp
-    copy_config "yt-dlp/config" "~/.config/yt-dlp/config"
+    copy_config "yt-dlp/config" "$HOME/.config/yt-dlp/config"
     success "yt-dlp done."
 }
 
@@ -221,7 +221,7 @@ install_ytx() {
     ask "Install yt-x?" || return
     section "yt-x"
     install_pkgs mpv fzf yt-x
-    copy_config "yt-x" "~/.config/yt-x"
+    copy_config "yt-x" "$HOME/.config/yt-x"
     success "yt-x done."
 }
 
