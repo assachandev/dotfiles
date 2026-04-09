@@ -1,13 +1,13 @@
 #!/bin/bash
 MUSIC_DIR="$(dirname "$0")"
 
-read -p "Artist/Folder (default: .): " folder
+read -rp "Artist/Folder (default: .): " folder
 folder="${folder:-.}"
 
 dest="$MUSIC_DIR/$folder"
 mkdir -p "$dest"
 
-read -p "URL: " url
+read -rp "URL: " url
 
 yt-dlp -x --audio-format mp3 --embed-thumbnail --add-metadata \
   -o "$dest/%(title)s [%(id)s].%(ext)s" "$url"

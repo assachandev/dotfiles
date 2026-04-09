@@ -2,7 +2,9 @@
 
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+# shellcheck source=scripts/utils.sh
 source "$DOTFILES_DIR/scripts/utils.sh"
+# shellcheck source=scripts/backup.sh
 source "$DOTFILES_DIR/scripts/backup.sh"
 
 # ─────────────────────────────────────────────────────────────

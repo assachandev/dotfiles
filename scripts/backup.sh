@@ -1,4 +1,5 @@
 #!/bin/bash
+# shellcheck disable=SC2154  # 'info' is defined in utils.sh and sourced by install.sh
 
 BACKUP_DIR=""
 

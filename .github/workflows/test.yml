@@ -14,14 +14,14 @@ jobs:
     name: Shellcheck
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Install shellcheck
         run: sudo apt-get install -y shellcheck
 
       - name: Run shellcheck
         run: |
-          shellcheck install.sh
+          shellcheck -x install.sh
           shellcheck scripts/utils.sh
           shellcheck scripts/backup.sh
           shellcheck configs/scripts/dl.sh
@@ -35,7 +35,7 @@ jobs:
     container: archlinux:latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Install base packages
         run: pacman -Sy --noconfirm bash coreutils git zsh
