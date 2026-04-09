@@ -1,8 +1,10 @@
-# dotfiles
+# ✦ dotfiles
 
-My personal Arch Linux dotfiles — clone and run the install script to set up a new machine.
+> Personal Arch Linux configuration files and automated setup script.
 
-## Quick Start
+&nbsp;
+
+## ⚡ Quick Start
 
 ```bash
 git clone https://github.com/assachandev/dotfiles.git ~/dotfiles
@@ -10,92 +12,111 @@ cd ~/dotfiles
 bash install.sh
 ```
 
-> Arch Linux only. The script will exit if `pacman` is not found.
+> **Arch Linux only.** The script will exit if `pacman` is not detected.
 
-## What It Does
+&nbsp;
 
-1. Installs **yay** and **paru** (AUR helpers)
-2. Interactively asks before installing each tool
-3. Backs up any existing configs to `~/.dotfiles_backup/<timestamp>/` before overwriting
-4. Copies configs to the correct locations — no symlinks
+## ✦ How It Works
 
-## Tools Included
+- Checks you're on Arch Linux
+- Installs **yay** and **paru** (AUR helpers) automatically
+- Asks before installing each tool — skip anything you don't need
+- Backs up existing configs to `~/.dotfiles_backup/<timestamp>/` before overwriting
+- Copies config files directly — no symlinks
+
+&nbsp;
+
+## 🧰 Tools
 
 ### Shell & Terminal
 | Tool | Description |
 |------|-------------|
-| zsh | Shell — with Oh My Zsh, zsh-autosuggestions, zsh-syntax-highlighting, p10k |
-| tmux | Terminal multiplexer |
-| kitty | GPU-accelerated terminal emulator |
+| [zsh](https://www.zsh.org/) | Shell with Oh My Zsh, autosuggestions, syntax highlighting, Powerlevel10k |
+| [tmux](https://github.com/tmux/tmux) | Terminal multiplexer |
+| [kitty](https://sw.kovidgoyal.net/kitty/) | GPU-accelerated terminal emulator |
 
-### CLI Tools
+### CLI Utilities
 | Tool | Description |
 |------|-------------|
-| bat | `cat` with syntax highlighting |
-| btop | System resource monitor |
-| atuin | Shell history with search |
-| ripgrep | Fast content search |
-| zoxide | Smarter `cd` |
-| eza | Modern `ls` |
-| tree | Directory tree viewer |
-| duf | Disk usage viewer |
-| yazi | Terminal file manager |
+| [bat](https://github.com/sharkdp/bat) | `cat` clone with syntax highlighting |
+| [eza](https://github.com/eza-community/eza) | Modern replacement for `ls` |
+| [zoxide](https://github.com/ajeetdsouza/zoxide) | Smarter `cd` that learns your habits |
+| [atuin](https://github.com/atuinsh/atuin) | Shell history search and sync |
+| [ripgrep](https://github.com/BurntSushi/ripgrep) | Blazing fast search tool |
+| [yazi](https://github.com/sxyazi/yazi) | Terminal file manager |
+| [btop](https://github.com/aristocratos/btop) | System resource monitor |
+| [duf](https://github.com/muesli/duf) | Disk usage viewer |
+| [tree](https://oldmanprogrammer.net/source.php?dir=projects/tree) | Directory tree display |
 | zip / unzip / unrar / p7zip | Archive tools |
+
+### Editor
+| Tool | Description |
+|------|-------------|
+| [neovim](https://neovim.io/) | Hyperextensible text editor |
 
 ### Music
 | Tool | Description |
 |------|-------------|
-| mpd | Music Player Daemon |
-| mpc | CLI client for MPD |
-| rmpc | TUI client for MPD |
+| [mpd](https://www.musicpd.org/) | Music Player Daemon |
+| [mpc](https://www.musicpd.org/clients/mpc/) | Minimal CLI client for MPD |
+| [rmpc](https://github.com/mierak/rmpc) | Feature-rich TUI client for MPD |
 
 ### Media
 | Tool | Description |
 |------|-------------|
-| neovim | Text editor |
-| yt-dlp | Video/audio downloader |
-| yt-x | Browse and watch YouTube in the terminal |
-| mpv | Media player (dependency of yt-x) |
-| fzf | Fuzzy finder (dependency of yt-x) |
+| [yt-dlp](https://github.com/yt-dlp/yt-dlp) | Download video and audio from the web |
+| [yt-x](https://github.com/Benexl/yt-x) | Browse and watch YouTube in the terminal |
+| [mpv](https://mpv.io/) | Lightweight media player |
+| [fzf](https://github.com/junegunn/fzf) | Command-line fuzzy finder |
 
 ### Applications
 | Tool | Description |
 |------|-------------|
-| Firefox | Web browser |
-| Telegram | Messaging |
-| Slack | Team messaging |
-| Signal | Encrypted messaging |
-| FileZilla | FTP client |
-| TigerVNC | VNC viewer |
-| VLC | Media player |
-| LibreOffice | Office suite |
+| [Firefox](https://www.mozilla.org/firefox/) | Web browser |
+| [Telegram](https://telegram.org/) | Messaging |
+| [Slack](https://slack.com/) | Team communication |
+| [Signal](https://signal.org/) | Encrypted messaging |
+| [FileZilla](https://filezilla-project.org/) | FTP client |
+| [TigerVNC](https://tigervnc.org/) | VNC viewer |
+| [VLC](https://www.videolan.org/vlc/) | Media player |
+| [LibreOffice](https://www.libreoffice.org/) | Office suite |
 
-### Custom Scripts
-| Script | Location | Description |
-|--------|----------|-------------|
-| `dl.sh` | `~/Music/dl.sh` | Download audio from URL via yt-dlp, auto-adds to MPD |
+&nbsp;
 
-## Configs Included
+## 📁 Config Structure
 
 ```
 configs/
-├── zsh/         → ~/.zshrc, ~/.p10k.zsh
-├── tmux/        → ~/.tmux.conf
-├── kitty/       → ~/.config/kitty/
-├── yazi/        → ~/.config/yazi/
-├── bat/         → ~/.config/bat/
-├── btop/        → ~/.config/btop/
-├── atuin/       → ~/.config/atuin/config.toml
-├── rmpc/        → ~/.config/rmpc/
-├── yt-x/        → ~/.config/yt-x/
-├── mpd/         → ~/.config/mpd/mpd.conf
-└── scripts/     → ~/Music/dl.sh
+├── zsh/            →  ~/.zshrc  •  ~/.p10k.zsh
+├── tmux/           →  ~/.tmux.conf
+├── kitty/          →  ~/.config/kitty/
+├── yazi/           →  ~/.config/yazi/
+├── bat/            →  ~/.config/bat/
+├── btop/           →  ~/.config/btop/
+├── atuin/          →  ~/.config/atuin/config.toml
+├── rmpc/           →  ~/.config/rmpc/
+├── yt-x/           →  ~/.config/yt-x/
+├── mpd/            →  ~/.config/mpd/mpd.conf
+└── scripts/
+    └── dl.sh       →  ~/Music/dl.sh
 ```
 
-> `ripgrep` and `yt-dlp` config directories are reserved for future use.
+&nbsp;
 
-## Adding a New Tool
+## 🎵 Custom Script — `dl.sh`
 
-1. Create `configs/<toolname>/` and drop the config files in
+Downloads audio from any URL via `yt-dlp`, converts to MP3, and auto-adds to MPD library.
+
+```bash
+~/Music/dl.sh
+# Artist/Folder (default: .): Pink Floyd
+# URL: <youtube or any supported url>
+```
+
+&nbsp;
+
+## ➕ Adding a New Tool
+
+1. Drop config files into `configs/<toolname>/`
 2. Add an `install_<toolname>()` function in `install.sh`
 3. Call it in `main()`
