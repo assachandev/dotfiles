@@ -1,0 +1,7 @@
+.DS_Store
+*.log
+*.bak
+
+# yt-x user data
+configs/yt-x/recent.json
+configs/yt-x/saved_videos.json
