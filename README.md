@@ -112,11 +112,3 @@ Downloads audio from any URL via `yt-dlp`, converts to MP3, and auto-adds to MPD
 # Artist/Folder (default: .): Pink Floyd
 # URL: <youtube or any supported url>
 ```
-
-&nbsp;
-
-## ➕ Adding a New Tool
-
-1. Drop config files into `configs/<toolname>/`
-2. Add an `install_<toolname>()` function in `install.sh`
-3. Call it in `main()`
