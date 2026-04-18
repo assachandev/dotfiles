@@ -30,7 +30,8 @@ bash install.sh
 ### Shell & Terminal
 | Tool | Description | Source |
 |------|-------------|--------|
-| [zsh](https://www.zsh.org/) | Shell with Oh My Zsh, autosuggestions, syntax highlighting, Powerlevel10k | apt |
+| [zsh](https://www.zsh.org/) | Shell with Oh My Zsh, autosuggestions, syntax highlighting | apt |
+| [Powerlevel10k](https://github.com/romkatv/powerlevel10k) | Zsh theme | git clone |
 | [tmux](https://github.com/tmux/tmux) | Terminal multiplexer | apt |
 
 ### CLI Utilities
