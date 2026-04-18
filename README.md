@@ -1,7 +1,6 @@
 # ✦ dotfiles
 
 > Personal Arch Linux configuration files and automated setup script.
-
 &nbsp;
 
 ## ⚡ Quick Start
@@ -40,10 +39,12 @@ bash install.sh
 |------|-------------|
 | [bat](https://github.com/sharkdp/bat) | `cat` clone with syntax highlighting |
 | [eza](https://github.com/eza-community/eza) | Modern replacement for `ls` |
+| [fd](https://github.com/sharkdp/fd) | Fast and user-friendly `find` alternative |
+| [fzf](https://github.com/junegunn/fzf) | Command-line fuzzy finder |
 | [zoxide](https://github.com/ajeetdsouza/zoxide) | Smarter `cd` that learns your habits |
 | [atuin](https://github.com/atuinsh/atuin) | Shell history search and sync |
 | [ripgrep](https://github.com/BurntSushi/ripgrep) | Blazing fast search tool |
-| [yazi](https://github.com/sxyazi/yazi) | Terminal file manager |
+| [yazi](https://github.com/sxyazi/yazi) | Terminal file manager with plugin support |
 | [btop](https://github.com/aristocratos/btop) | System resource monitor |
 | [duf](https://github.com/muesli/duf) | Disk usage viewer |
 | [tree](https://oldmanprogrammer.net/source.php?dir=projects/tree) | Directory tree display |
@@ -67,7 +68,6 @@ bash install.sh
 | [yt-dlp](https://github.com/yt-dlp/yt-dlp) | Download video and audio from the web |
 | [yt-x](https://github.com/Benexl/yt-x) | Browse and watch YouTube in the terminal |
 | [mpv](https://mpv.io/) | Lightweight media player |
-| [fzf](https://github.com/junegunn/fzf) | Command-line fuzzy finder |
 
 ### Applications
 | Tool | Description |
@@ -80,6 +80,7 @@ bash install.sh
 | [TigerVNC](https://tigervnc.org/) | VNC viewer |
 | [VLC](https://www.videolan.org/vlc/) | Media player |
 | [LibreOffice](https://www.libreoffice.org/) | Office suite |
+| [Zathura](https://pwmt.org/projects/zathura/) | Keyboard-driven document viewer |
 
 &nbsp;
 
