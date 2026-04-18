@@ -114,6 +114,14 @@ install_zsh() {
         success "zsh-syntax-highlighting already installed."
     fi
 
+    # Powerlevel10k
+    if [ ! -d "$HOME/.config/zsh/powerlevel10k" ]; then
+        info "Installing Powerlevel10k..."
+        git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$HOME/.config/zsh/powerlevel10k"
+    else
+        success "Powerlevel10k already installed."
+    fi
+
     copy_config "zsh/.zshrc" "$HOME/.zshrc"
     copy_config "zsh/.p10k.zsh" "$HOME/.p10k.zsh"
 

@@ -4,17 +4,17 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # 2. Environment Variables
-export EDITOR='nvim'
+export EDITOR='vim'
 export PATH=$HOME/.local/bin:$HOME/.atuin/bin:$PATH
 
 # 3. Oh My Zsh
 export ZSH="$HOME/.oh-my-zsh"
-ZSH_THEME="minimal"
+ZSH_THEME="powerlevel10k/powerlevel10k"
 plugins=(git sudo docker extract)
 source $ZSH/oh-my-zsh.sh
 
 # 4. Theme & Appearance (Powerlevel10k)
-#source ~/.config/zsh/powerlevel10k/powerlevel10k.zsh-theme
+source ~/.config/zsh/powerlevel10k/powerlevel10k.zsh-theme
 
 # 5. Plugins
 source ~/.config/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
