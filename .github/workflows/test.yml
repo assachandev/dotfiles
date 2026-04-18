@@ -2,9 +2,9 @@ name: Test
 
 on:
   push:
-    branches: [main]
+    branches: [main, ubuntu]
   pull_request:
-    branches: [main]
+    branches: [main, ubuntu]
 
 jobs:
   # ─────────────────────────────────────────────────────────────
@@ -24,48 +24,50 @@ jobs:
           shellcheck -x install.sh
           shellcheck scripts/utils.sh
           shellcheck scripts/backup.sh
-          shellcheck configs/scripts/dl.sh
 
   # ─────────────────────────────────────────────────────────────
   #  Dry Run — verify configs copy to correct locations
   # ─────────────────────────────────────────────────────────────
   dry-run:
-    name: Dry Run (Arch Linux)
+    name: Dry Run (Ubuntu Server)
     runs-on: ubuntu-latest
-    container: archlinux:latest
 
     steps:
       - uses: actions/checkout@v5
 
       - name: Install base packages
-        run: pacman -Sy --noconfirm bash coreutils git zsh
+        run: sudo apt-get install -y bash coreutils git zsh
 
       - name: Create mock commands
         run: |
-          # Mock yay and paru as already installed — skips AUR helper build
-          printf '#!/bin/bash\necho "[MOCK] yay $*"\n' > /usr/local/bin/yay
-          printf '#!/bin/bash\necho "[MOCK] paru $*"\n' > /usr/local/bin/paru
-          chmod +x /usr/local/bin/yay /usr/local/bin/paru
+          # Mock apt-get — skips real package installation
+          printf '#!/bin/bash\necho "[MOCK] apt-get $*"\n' > /tmp/apt-get
+          sudo install -m 755 /tmp/apt-get /usr/local/bin/apt-get
 
-          # Mock ya (yazi package manager) — not available in container
-          printf '#!/bin/bash\necho "[MOCK] ya $*"\n' > /usr/local/bin/ya
-          chmod +x /usr/local/bin/ya
+          # Mock curl — outputs a no-op script (used by oh-my-zsh / atuin installers)
+          printf '#!/bin/bash\necho "echo [MOCK] skipped"\n' > /tmp/curl
+          sudo install -m 755 /tmp/curl /usr/local/bin/curl
 
-          # Mock systemctl and chsh — not available in container
-          printf '#!/bin/bash\necho "[MOCK] systemctl $*"\n' > /usr/local/bin/systemctl
-          printf '#!/bin/bash\necho "[MOCK] chsh $*"\n'     > /usr/local/bin/chsh
-          chmod +x /usr/local/bin/systemctl /usr/local/bin/chsh
+          # Mock ya (yazi package manager)
+          printf '#!/bin/bash\necho "[MOCK] ya $*"\n' > /tmp/ya
+          sudo install -m 755 /tmp/ya /usr/local/bin/ya
 
-          # Mock curl — outputs a no-op script (used by oh-my-zsh installer)
-          printf '#!/bin/bash\necho "echo [MOCK] skipped"\n' > /usr/local/bin/curl
-          chmod +x /usr/local/bin/curl
+          # Mock chsh — not needed in container
+          printf '#!/bin/bash\necho "[MOCK] chsh $*"\n' > /tmp/chsh
+          sudo install -m 755 /tmp/chsh /usr/local/bin/chsh
 
-      - name: Pre-create zsh plugin dirs
+      - name: Pre-create dirs to simulate already-installed tools
         run: |
-          # Simulate already-installed plugins so the checks pass
           mkdir -p "$HOME/.oh-my-zsh"
           mkdir -p "$HOME/.config/zsh/zsh-autosuggestions"
           mkdir -p "$HOME/.config/zsh/zsh-syntax-highlighting"
+          mkdir -p "$HOME/.config/zsh/powerlevel10k"
+          # Simulate already-installed binaries
+          sudo touch /usr/local/bin/atuin  && sudo chmod +x /usr/local/bin/atuin
+          sudo touch /usr/local/bin/zoxide && sudo chmod +x /usr/local/bin/zoxide
+          sudo touch /usr/local/bin/eza    && sudo chmod +x /usr/local/bin/eza
+          sudo touch /usr/local/bin/duf    && sudo chmod +x /usr/local/bin/duf
+          sudo touch /usr/local/bin/yazi   && sudo chmod +x /usr/local/bin/yazi
 
       - name: Run install script
         run: yes | bash install.sh
@@ -88,7 +90,6 @@ jobs:
           check "$HOME/.zshrc"
           check "$HOME/.p10k.zsh"
           check "$HOME/.tmux.conf"
-          check "$HOME/.config/kitty/kitty.conf"
 
           echo ""
           echo "── CLI Tools ─────────────────────────────────"
@@ -99,19 +100,7 @@ jobs:
           check "$HOME/.config/yazi/keymap.toml"
           check "$HOME/.config/yazi/init.lua"
           check "$HOME/.config/yazi/package.toml"
-
-          echo ""
-          echo "── Music ─────────────────────────────────────"
-          check "$HOME/.config/mpd/mpd.conf"
-          check "$HOME/.config/rmpc/config.ron"
-
-          echo ""
-          echo "── Media ─────────────────────────────────────"
-          check "$HOME/.config/yt-x/yt-x.conf"
-
-          echo ""
-          echo "── Scripts ───────────────────────────────────"
-          check "$HOME/Music/dl.sh"
+          check "$HOME/.config/ripgrep/config"
 
           echo ""
           if [ "$errors" -gt 0 ]; then
