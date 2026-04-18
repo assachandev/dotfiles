@@ -1,0 +1,11 @@
+# ripgrep configuration
+
+# Smart case: case-insensitive if pattern is all lowercase
+--smart-case
+
+# Follow symlinks
+--follow
+
+# Default file type colors
+--colors=match:fg:yellow
+--colors=match:style:bold
