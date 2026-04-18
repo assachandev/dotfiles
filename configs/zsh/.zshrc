@@ -26,7 +26,6 @@ eval "$(atuin init zsh)"
 
 # 7. Aliases
 # --- Core ---
-alias nv='nvim'
 alias yz='yazi'
 alias ..='cd ..'
 alias grep='grep --color=auto'
@@ -48,8 +47,12 @@ if command -v batcat > /dev/null; then
 fi
 
 # 8. fzf
-source /usr/share/fzf/key-bindings.zsh
-source /usr/share/fzf/completion.zsh
+# Ubuntu: /usr/share/doc/fzf/examples/ — Arch: /usr/share/fzf/
+for _fzf_dir in /usr/share/doc/fzf/examples /usr/share/fzf; do
+    [[ -f "$_fzf_dir/key-bindings.zsh" ]] && source "$_fzf_dir/key-bindings.zsh"
+    [[ -f "$_fzf_dir/completion.zsh"   ]] && source "$_fzf_dir/completion.zsh"
+done
+unset _fzf_dir
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git'
