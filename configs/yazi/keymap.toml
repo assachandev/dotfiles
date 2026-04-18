@@ -1,0 +1,4 @@
+[[manager.prepend_keymap]]
+on = ["g", "s"]
+run = "plugin git"
+desc = "Git status"

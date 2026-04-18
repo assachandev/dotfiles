@@ -47,6 +47,10 @@ jobs:
           printf '#!/bin/bash\necho "[MOCK] paru $*"\n' > /usr/local/bin/paru
           chmod +x /usr/local/bin/yay /usr/local/bin/paru
 
+          # Mock ya (yazi package manager) — not available in container
+          printf '#!/bin/bash\necho "[MOCK] ya $*"\n' > /usr/local/bin/ya
+          chmod +x /usr/local/bin/ya
+
           # Mock systemctl and chsh — not available in container
           printf '#!/bin/bash\necho "[MOCK] systemctl $*"\n' > /usr/local/bin/systemctl
           printf '#!/bin/bash\necho "[MOCK] chsh $*"\n'     > /usr/local/bin/chsh
@@ -92,6 +96,9 @@ jobs:
           check "$HOME/.config/btop/btop.conf"
           check "$HOME/.config/atuin/config.toml"
           check "$HOME/.config/yazi/yazi.toml"
+          check "$HOME/.config/yazi/keymap.toml"
+          check "$HOME/.config/yazi/init.lua"
+          check "$HOME/.config/yazi/package.toml"
 
           echo ""
           echo "── Music ─────────────────────────────────────"

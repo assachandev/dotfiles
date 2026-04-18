@@ -141,6 +141,12 @@ install_yazi() {
     section "yazi"
     install_pkgs yazi
     copy_config "yazi" "$HOME/.config/yazi"
+    if command -v ya &>/dev/null; then
+        info "Installing yazi plugins..."
+        ya pack -i
+    else
+        warn "ya not found — run 'ya pack -i' manually to install yazi plugins."
+    fi
     success "yazi done."
 }
 
@@ -177,9 +183,9 @@ install_ripgrep() {
 }
 
 install_cli_tools() {
-    ask "Install CLI utilities (zoxide, eza, tree, duf, zip, unzip, unrar, p7zip)?" || return
+    ask "Install CLI utilities (zoxide, eza, tree, duf, fzf, fd, zip, unzip, unrar, p7zip)?" || return
     section "CLI utilities"
-    install_pkgs zoxide eza tree duf zip unzip unrar p7zip
+    install_pkgs zoxide eza tree duf fzf fd zip unzip unrar p7zip
     success "CLI utilities done."
 }
 
@@ -226,10 +232,11 @@ install_ytx() {
 }
 
 install_apps() {
-    ask "Install GUI applications (Firefox, Telegram, Slack, Signal, FileZilla, TigerVNC, VLC, LibreOffice)?" || return
+    ask "Install GUI applications (Firefox, Telegram, Slack, Signal, FileZilla, TigerVNC, VLC, LibreOffice, Zathura)?" || return
     section "Applications"
     install_pkgs firefox telegram-desktop signal-desktop filezilla tigervnc vlc libreoffice-fresh
     install_pkgs slack-desktop
+    install_pkgs zathura zathura-pdf-mupdf
     success "Applications done."
 }
 
