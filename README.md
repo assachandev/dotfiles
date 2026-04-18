@@ -1,86 +1,59 @@
 # ✦ dotfiles
 
-> Personal Arch Linux configuration files and automated setup script.
+> Personal Ubuntu Server configuration files and automated setup script.
 &nbsp;
 
 ## ⚡ Quick Start
 
 ```bash
-git clone https://github.com/assachandev/dotfiles.git ~/dotfiles
+git clone -b ubuntu https://github.com/assachandev/dotfiles.git ~/dotfiles
 cd ~/dotfiles
 bash install.sh
 ```
 
-> **Arch Linux only.** The script will exit if `pacman` is not detected.
+> **Ubuntu only.** The script will exit if `apt` is not detected.
 
 &nbsp;
 
 ## ✦ How It Works
 
-- Checks you're on Arch Linux
-- Installs **yay** and **paru** (AUR helpers) automatically
+- Checks you're on Ubuntu (apt-based)
 - Asks before installing each tool — skip anything you don't need
 - Backs up existing configs to `~/.dotfiles_backup/<timestamp>/` before overwriting
 - Copies config files directly — no symlinks
+- Tools not available in apt (eza, duf, atuin, yazi) are installed from GitHub releases or official install scripts
 
 &nbsp;
 
 ## 🧰 Tools
 
 ### Shell & Terminal
-| Tool | Description |
-|------|-------------|
-| [zsh](https://www.zsh.org/) | Shell with Oh My Zsh, autosuggestions, syntax highlighting, Powerlevel10k |
-| [tmux](https://github.com/tmux/tmux) | Terminal multiplexer |
-| [kitty](https://sw.kovidgoyal.net/kitty/) | GPU-accelerated terminal emulator |
+| Tool | Description | Source |
+|------|-------------|--------|
+| [zsh](https://www.zsh.org/) | Shell with Oh My Zsh, autosuggestions, syntax highlighting, Powerlevel10k | apt |
+| [tmux](https://github.com/tmux/tmux) | Terminal multiplexer | apt |
 
 ### CLI Utilities
-| Tool | Description |
-|------|-------------|
-| [bat](https://github.com/sharkdp/bat) | `cat` clone with syntax highlighting |
-| [eza](https://github.com/eza-community/eza) | Modern replacement for `ls` |
-| [fd](https://github.com/sharkdp/fd) | Fast and user-friendly `find` alternative |
-| [fzf](https://github.com/junegunn/fzf) | Command-line fuzzy finder |
-| [zoxide](https://github.com/ajeetdsouza/zoxide) | Smarter `cd` that learns your habits |
-| [atuin](https://github.com/atuinsh/atuin) | Shell history search and sync |
-| [ripgrep](https://github.com/BurntSushi/ripgrep) | Blazing fast search tool |
-| [yazi](https://github.com/sxyazi/yazi) | Terminal file manager with plugin support |
-| [btop](https://github.com/aristocratos/btop) | System resource monitor |
-| [duf](https://github.com/muesli/duf) | Disk usage viewer |
-| [tree](https://oldmanprogrammer.net/source.php?dir=projects/tree) | Directory tree display |
-| zip / unzip / unrar / p7zip | Archive tools |
+| Tool | Description | Source |
+|------|-------------|--------|
+| [bat](https://github.com/sharkdp/bat) | `cat` clone with syntax highlighting | apt (`batcat`) |
+| [eza](https://github.com/eza-community/eza) | Modern replacement for `ls` | apt / GitHub releases |
+| [fd](https://github.com/sharkdp/fd) | Fast and user-friendly `find` alternative | apt (`fd-find`) |
+| [fzf](https://github.com/junegunn/fzf) | Command-line fuzzy finder | apt |
+| [zoxide](https://github.com/ajeetdsouza/zoxide) | Smarter `cd` that learns your habits | install script |
+| [atuin](https://github.com/atuinsh/atuin) | Shell history search and sync | install script |
+| [ripgrep](https://github.com/BurntSushi/ripgrep) | Blazing fast search tool | apt |
+| [yazi](https://github.com/sxyazi/yazi) | Terminal file manager with plugin support | GitHub releases |
+| [btop](https://github.com/aristocratos/btop) | System resource monitor | apt |
+| [duf](https://github.com/muesli/duf) | Disk usage viewer | apt / GitHub releases |
+| [tree](https://oldmanprogrammer.net/source.php?dir=projects/tree) | Directory tree display | apt |
+| zip / unzip / p7zip | Archive tools | apt |
 
-### Editor
-| Tool | Description |
-|------|-------------|
-| [neovim](https://neovim.io/) | Hyperextensible text editor |
+&nbsp;
 
-### Music
-| Tool | Description |
-|------|-------------|
-| [mpd](https://www.musicpd.org/) | Music Player Daemon |
-| [mpc](https://www.musicpd.org/clients/mpc/) | Minimal CLI client for MPD |
-| [rmpc](https://github.com/mierak/rmpc) | Feature-rich TUI client for MPD |
-
-### Media
-| Tool | Description |
-|------|-------------|
-| [yt-dlp](https://github.com/yt-dlp/yt-dlp) | Download video and audio from the web |
-| [yt-x](https://github.com/Benexl/yt-x) | Browse and watch YouTube in the terminal |
-| [mpv](https://mpv.io/) | Lightweight media player |
-
-### Applications
-| Tool | Description |
-|------|-------------|
-| [Firefox](https://www.mozilla.org/firefox/) | Web browser |
-| [Telegram](https://telegram.org/) | Messaging |
-| [Slack](https://slack.com/) | Team communication |
-| [Signal](https://signal.org/) | Encrypted messaging |
-| [FileZilla](https://filezilla-project.org/) | FTP client |
-| [TigerVNC](https://tigervnc.org/) | VNC viewer |
-| [VLC](https://www.videolan.org/vlc/) | Media player |
-| [LibreOffice](https://www.libreoffice.org/) | Office suite |
-| [Zathura](https://pwmt.org/projects/zathura/) | Keyboard-driven document viewer |
+> **Note:** `bat` is installed as `batcat` and `fd` as `fdfind` on some Ubuntu versions.
+> The script automatically creates symlinks (`~/.local/bin/bat` and `~/.local/bin/fd`).
+> Ensure `~/.local/bin` is in your `PATH`.
 
 &nbsp;
 
@@ -90,26 +63,9 @@ bash install.sh
 configs/
 ├── zsh/            →  ~/.zshrc  •  ~/.p10k.zsh
 ├── tmux/           →  ~/.tmux.conf
-├── kitty/          →  ~/.config/kitty/
 ├── yazi/           →  ~/.config/yazi/
 ├── bat/            →  ~/.config/bat/
 ├── btop/           →  ~/.config/btop/
 ├── atuin/          →  ~/.config/atuin/config.toml
-├── rmpc/           →  ~/.config/rmpc/
-├── yt-x/           →  ~/.config/yt-x/
-├── mpd/            →  ~/.config/mpd/mpd.conf
-└── scripts/
-    └── dl.sh       →  ~/Music/dl.sh
-```
-
-&nbsp;
-
-## 🎵 Custom Script — `dl.sh`
-
-Downloads audio from any URL via `yt-dlp`, converts to MP3, and auto-adds to MPD library.
-
-```bash
-~/Music/dl.sh
-# Artist/Folder (default: .): Pink Floyd
-# URL: <youtube or any supported url>
+└── ripgrep/        →  ~/.config/ripgrep/config
 ```
